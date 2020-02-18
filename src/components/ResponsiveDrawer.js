@@ -111,6 +111,8 @@ function ResponsiveDrawer(props) {
 		if (!lastLocation || lastLocation.pathname !== location.pathname) {
 			setIsLoading(true); // Set it to false per route after async action
 		}
+
+		setMobileOpen(false);
 	}, [lastLocation, location, setIsLoading]);
 
 	const drawer = (

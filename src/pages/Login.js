@@ -63,8 +63,16 @@ const Login = () => {
 					<img src={Logo} alt="logo" style={{ width: '100%' }} />
 				</Grid>
 				<Grid item>
+					<Typography
+						variant="h4"
+						style={{ textAlign: 'center', fontWeight: 'bold' }}
+					>
+						Spotify Stats
+					</Typography>
+				</Grid>
+				<Grid item>
 					<Typography variant="h6" style={{ textAlign: 'center' }}>
-						Check your Most Listened to Artists and Songs on Spotify.
+						Your Most Listened to Artists and Songs on Spotify.
 					</Typography>
 				</Grid>
 				<Grid item>
