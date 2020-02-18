@@ -26,6 +26,7 @@ import { useLastLocation } from 'react-router-last-location';
 import { AppContext } from '../contexts/AppContext';
 import { logout } from '../spotify';
 import Loader from './Loader';
+import config from '../config';
 
 const drawerWidth = 240;
 
@@ -188,6 +189,9 @@ function ResponsiveDrawer(props) {
 						</IconButton>
 					</Hidden>
 					<div className={classes.grow} />
+					<Button color="inherit" href={config.repoUrl} target="_BLANK">
+						GitHub
+					</Button>
 					<Button
 						color="inherit"
 						onClick={() => logout()}
