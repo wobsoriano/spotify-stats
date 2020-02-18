@@ -61,6 +61,10 @@ const useStyles = makeStyles(theme => ({
 	content: {
 		flexGrow: 1,
 		padding: theme.spacing(3),
+		[theme.breakpoints.only('xs')]: {
+			paddingLeft: theme.spacing(1),
+			paddingRight: theme.spacing(1),
+		},
 	},
 	logout: {
 		[theme.breakpoints.only('xs')]: {
