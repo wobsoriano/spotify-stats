@@ -129,6 +129,7 @@ const TopTracks = ({ history }) => {
 									onChange={handleChange}
 									aria-label="tabs"
 									classes={{ indicator: classes.tabs }}
+									variant="fullWidth"
 								>
 									<Tab label="All Time" value="long_term" />
 									<Tab label="Last 6 months" value="medium_term" />
