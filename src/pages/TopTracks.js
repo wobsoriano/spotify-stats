@@ -20,6 +20,7 @@ import {
 import { spotify } from '../spotify';
 import { millisToMinutesAndSeconds, parseQueryParams } from '../utils';
 import { AppContext } from '../contexts/AppContext';
+import PlaylistCreator from '../components/PlaylistCreator';
 
 const useStyles = makeStyles(theme => ({
 	list: {
@@ -73,7 +74,9 @@ const TopTracks = ({ history }) => {
 			}
 
 			setTracks([...tracks, ...res.items]);
-		} catch (e) {}
+		} catch (e) {
+			console.error(e);
+		}
 		setLoadMoreText('Load More');
 		setLoadMoreDisabled(false);
 	};
@@ -94,7 +97,9 @@ const TopTracks = ({ history }) => {
 				} else {
 					setHideLoadmore(true);
 				}
-			} catch (e) {}
+			} catch (e) {
+				console.error(e);
+			}
 			setIsLoading(false);
 		}
 		fetchTopTracks();
@@ -104,6 +109,7 @@ const TopTracks = ({ history }) => {
 		<React.Fragment>
 			{!isLoading && (
 				<Container maxWidth="lg">
+					{/* Page Title and Tabs */}
 					<Box className={classes.header}>
 						<Grid
 							container
@@ -131,6 +137,8 @@ const TopTracks = ({ history }) => {
 							</Grid>
 						</Grid>
 					</Box>
+
+					{/* Top Tracks List */}
 					<List className={classes.list}>
 						{tracks.map((track, idx) => {
 							return (
@@ -167,6 +175,8 @@ const TopTracks = ({ history }) => {
 							);
 						})}
 					</List>
+
+					{/* Load More Button */}
 					{!hideLoadMore && (
 						<Box className={classes.buttons}>
 							<Grid
@@ -199,6 +209,13 @@ const TopTracks = ({ history }) => {
 							</Grid>
 						</Box>
 					)}
+
+					{/* Playlist Button Creator */}
+					<PlaylistCreator
+						title="Create Your Top Tracks Playlist"
+						message={`This creates a playlist from your ${tracks.length} Top tracks.`}
+						trackUris={tracks.map(i => i.uri)}
+					/>
 				</Container>
 			)}
 		</React.Fragment>

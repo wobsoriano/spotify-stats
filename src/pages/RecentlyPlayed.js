@@ -18,6 +18,7 @@ import {
 	Box,
 	Hidden,
 } from '@material-ui/core';
+import PlaylistCreator from '../components/PlaylistCreator';
 
 const useStyles = makeStyles(theme => ({
 	list: {
@@ -25,16 +26,6 @@ const useStyles = makeStyles(theme => ({
 	},
 	header: {
 		marginBottom: theme.spacing(1),
-	},
-	fab: {
-		position: 'fixed',
-		bottom: theme.spacing(2),
-		right: theme.spacing(2),
-		backgroundColor: '#1DB954',
-		'&:hover': {
-			backgroundColor: '#1ED760',
-		},
-		color: '#fff',
 	},
 	title: {
 		fontWeight: 'bold',
@@ -69,7 +60,9 @@ const RecentlyPlayed = ({ history }) => {
 			}
 
 			setTracks([...tracks, ...res.items]);
-		} catch (e) {}
+		} catch (e) {
+			console.error(e);
+		}
 		setLoadMoreText('Load More');
 		setLoadMoreDisabled(false);
 	};
@@ -85,7 +78,9 @@ const RecentlyPlayed = ({ history }) => {
 				setBefore(+q.get('before'));
 				setLimit(+q.get('limit'));
 				setHideLoadmore(false);
-			} catch (e) {}
+			} catch (e) {
+				console.error(e);
+			}
 			setIsLoading(false);
 		}
 		fetchTopTracks();
@@ -95,11 +90,14 @@ const RecentlyPlayed = ({ history }) => {
 		<React.Fragment>
 			{!isLoading && (
 				<Container maxWidth="lg">
+					{/* Page Title */}
 					<Box className={classes.header}>
 						<Typography variant="h4" gutterBottom className={classes.title}>
 							Recently Played
 						</Typography>
 					</Box>
+
+					{/* Recently Played List */}
 					<List className={classes.root}>
 						{tracks.map((track, idx) => {
 							return (
@@ -137,6 +135,8 @@ const RecentlyPlayed = ({ history }) => {
 							);
 						})}
 					</List>
+
+					{/* Load More Button */}
 					{!hideLoadMore && (
 						<Box className={classes.buttons}>
 							<Grid
@@ -169,6 +169,14 @@ const RecentlyPlayed = ({ history }) => {
 							</Grid>
 						</Box>
 					)}
+
+					{/* Playlist Button Creator */}
+					<PlaylistCreator
+						title="Create Your Recently Played Playlist"
+						message={`This creates a playlist from your ${tracks.length} Recently Played
+						tracks.`}
+						trackUris={tracks.map(i => i.track.uri)}
+					/>
 				</Container>
 			)}
 		</React.Fragment>
