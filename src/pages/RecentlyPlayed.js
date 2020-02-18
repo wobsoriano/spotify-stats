@@ -1,14 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import AddIcon from '@material-ui/icons/Add';
-import CloseIcon from '@material-ui/icons/Close';
 import { spotify } from '../spotify';
 import { millisToMinutesAndSeconds, parseQueryParams } from '../utils';
 import { AppContext } from '../contexts/AppContext';
 import {
-	Tooltip,
-	Box,
-	Fab,
 	Typography,
 	Avatar,
 	Container,
@@ -18,15 +13,9 @@ import {
 	ListItemText,
 	ListItemSecondaryAction,
 	Divider,
-	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogContentText,
-	DialogTitle,
 	Button,
-	Snackbar,
-	IconButton,
 	Grid,
+	Box,
 	Hidden,
 } from '@material-ui/core';
 
@@ -55,9 +44,6 @@ const useStyles = makeStyles(theme => ({
 const RecentlyPlayed = ({ history }) => {
 	const classes = useStyles();
 	const [tracks, setTracks] = useState([]);
-	const [dialog, setDialog] = useState(false);
-	const [snackbar, setSnackbar] = useState(false);
-	const [snackbarMessage, setSnackbarMessage] = useState('');
 	const [limit, setLimit] = useState(20);
 	const [before, setBefore] = useState('');
 	const [hideLoadMore, setHideLoadmore] = useState(false);
@@ -104,30 +90,6 @@ const RecentlyPlayed = ({ history }) => {
 		}
 		fetchTopTracks();
 	}, [limit, setIsLoading]);
-
-	const createPlaylist = async () => {
-		try {
-			const today = new Date();
-			const month = today.toLocaleString('default', { month: 'long' });
-			const user = await spotify().getMe();
-			const playlist = await spotify().createPlaylist(user.id, {
-				name: `Replay ${
-					tracks.length
-				} Tracks - ${month} ${today.getFullYear()}`,
-			});
-			const trackUris = tracks.map(i => i.track.uri);
-			const { snapshot_id } = await spotify().addTracksToPlaylist(
-				playlist.id,
-				trackUris
-			);
-			console.log(snapshot_id);
-			setSnackbarMessage('Playlist has been created');
-			setSnackbar(true);
-			setDialog(false);
-		} catch (e) {
-			console.log(e);
-		}
-	};
 
 	return (
 		<React.Fragment>
@@ -207,56 +169,6 @@ const RecentlyPlayed = ({ history }) => {
 							</Grid>
 						</Box>
 					)}
-					<Tooltip
-						title="Create Your Recently Played Playlist"
-						placement="left-start"
-						aria-label="add"
-					>
-						<Fab className={classes.fab} onClick={() => setDialog(true)}>
-							<AddIcon />
-						</Fab>
-					</Tooltip>
-					<Dialog
-						open={dialog}
-						aria-labelledby="alert-dialog-title"
-						aria-describedby="alert-dialog-description"
-					>
-						<DialogTitle id="alert-dialog-title">Create Playlist</DialogTitle>
-						<DialogContent>
-							<DialogContentText id="alert-dialog-description">
-								This creates a playlist from your {tracks.length} Recently
-								Played tracks.
-							</DialogContentText>
-						</DialogContent>
-						<DialogActions>
-							<Button onClick={() => setDialog(false)}>Cancel</Button>
-							<Button onClick={() => createPlaylist()} autoFocus>
-								Create
-							</Button>
-						</DialogActions>
-					</Dialog>
-
-					<Snackbar
-						anchorOrigin={{
-							vertical: 'bottom',
-							horizontal: 'right',
-						}}
-						open={snackbar}
-						autoHideDuration={300}
-						message={snackbarMessage}
-						action={
-							<React.Fragment>
-								<IconButton
-									size="small"
-									aria-label="close"
-									color="inherit"
-									onClick={() => setSnackbar(false)}
-								>
-									<CloseIcon fontSize="small" />
-								</IconButton>
-							</React.Fragment>
-						}
-					/>
 				</Container>
 			)}
 		</React.Fragment>
