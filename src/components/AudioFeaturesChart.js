@@ -48,6 +48,7 @@ const data = {
 
 const AudioFeaturesChart = props => {
 	const classes = useStyles();
+	data.datasets[0].data = []; // Clear to avoid repeating data
 	data.labels.forEach(label => {
 		data.datasets[0].data.push(props.features[label.toLowerCase()]);
 	});
