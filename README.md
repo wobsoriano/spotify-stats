@@ -2,25 +2,34 @@
 
 Your spotify profile's top artists and tracks with charts and playlist creator.
 
-Built with:
+## Installing
+
+1. Follow instructions in setting up server [here](https://github.com/sorxrob/spotify-stats-server)
+
+2. Install dependencies
+
+   ```bash
+   npm install
+   ```
+
+3. Fire up the server and watch files
+
+   ```bash
+   npm start
+   ```
+
+## Built with
 
 - [React](https://reactjs.org/)
 - [Material UI](https://material-ui.com/)
 - [Chart.js](https://www.chartjs.org/)
 - [Spotify API](https://developer.spotify.com/documentation/web-api/)
 
-Server: https://github.com/sorxrob/spotify-stats-server
+## Acknowledgments
 
-## Getting Started
+* Hat tip to anyone whose code was used
 
-1. Install dependencies
+## To-Do
 
-   ```bash
-   npm install
-   ```
-
-2. Fire up the server and watch files
-
-   ```bash
-   npm start
-   ```
+- [ ] Social sharing of result
+- [ ] Fix refresh token issues
